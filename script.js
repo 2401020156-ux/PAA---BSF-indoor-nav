@@ -225,5 +225,73 @@ window.addEventListener('resize', () => {
   }, 80);
 });
 
+// ─── BFS ─────────────────────────────────────────────────────────────────────
+function bfs(start, goal) {
+  const queue = [start];
+  const visited = new Set();
+  const parent = {};
+
+  const explored = [];
+
+  visited.add(start.join(','));
+
+  const directions = [
+    [-1, 0], // atas
+    [1, 0],  // bawah
+    [0, -1], // kiri
+    [0, 1]   // kanan
+  ];
+
+  while (queue.length > 0) {
+    const [r, c] = queue.shift();
+
+    explored.push([r, c]);
+
+    if (r === goal[0] && c === goal[1]) {
+
+      const path = [];
+      let current = goal.join(',');
+
+      while (current) {
+        const [cr, cc] = current.split(',').map(Number);
+        path.unshift([cr, cc]);
+        current = parent[current];
+      }
+
+      return {
+        explored,
+        path
+      };
+    }
+
+    for (const [dr, dc] of directions) {
+      const nr = r + dr;
+      const nc = c + dc;
+
+      if (
+        nr >= 0 &&
+        nr < ROWS &&
+        nc >= 0 &&
+        nc < COLS &&
+        grid[nr][nc] !== CELL.WALL
+      ) {
+
+        const key = `${nr},${nc}`;
+
+        if (!visited.has(key)) {
+          visited.add(key);
+          parent[key] = `${r},${c}`;
+          queue.push([nr, nc]);
+        }
+      }
+    }
+  }
+
+  return {
+    explored,
+    path: null
+  };
+}
+
 // Kick off
 init();
