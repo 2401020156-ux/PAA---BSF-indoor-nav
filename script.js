@@ -33,6 +33,9 @@ let destPos   = null;
 let isRunning = false;
 let animFrameId = null;
 let cellSize  = 20; // computed dynamically
+let currentMapIndex = 0;
+let sourceRoom = null;
+let destRoom = null;
 
 // ─── MAP KAMPUS ─────────────────────────────────────────────
 
