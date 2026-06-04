@@ -483,6 +483,74 @@ function bfs(start, goal) {
   };
 }
 
+// ─── Generate Maze ─────────────────────────────────────────────────────────────
+function generateRandomMap() {
+  grid = [];
+
+  for (let r = 0; r < ROWS; r++) {
+    const row = [];
+
+    for (let c = 0; c < COLS; c++) {
+
+      if (
+        r === 0 ||
+        c === 0 ||
+        r === ROWS - 1 ||
+        c === COLS - 1
+      ) {
+        row.push(CELL.WALL);
+      } else {
+        row.push(
+          Math.random() < 0.25
+            ? CELL.WALL
+            : CELL.CORRIDOR
+        );
+      }
+    }
+
+    grid.push(row);
+  }
+}
+
+// ─── Get Random Corridor ──────────────────────────────────────────────────────
+function getRandomCorridor() {
+
+  while (true) {
+
+    const r = Math.floor(Math.random() * ROWS);
+    const c = Math.floor(Math.random() * COLS);
+
+    if (grid[r][c] === CELL.CORRIDOR) {
+      return [r, c];
+    }
+  }
+}
+
+// ─── Randomize Source & Destination ─────────────────────────────────────────
+function randomizeSourceDest() {
+
+  if (sourcePos) {
+    grid[sourcePos[0]][sourcePos[1]] = CELL.CORRIDOR;
+  }
+
+  if (destPos) {
+    grid[destPos[0]][destPos[1]] = CELL.CORRIDOR;
+  }
+
+  sourcePos = getRandomCorridor();
+  destPos = getRandomCorridor();
+
+  while (
+    sourcePos[0] === destPos[0] &&
+    sourcePos[1] === destPos[1]
+  ) {
+    destPos = getRandomCorridor();
+  }
+
+  grid[sourcePos[0]][sourcePos[1]] = CELL.SOURCE;
+  grid[destPos[0]][destPos[1]] = CELL.DEST;
+}
+
 // ─── Event Handlers ─────────────────────────────────────────────────────────────
 document
   .getElementById('btnStart')
@@ -511,6 +579,10 @@ document
   .addEventListener('click', () => { // Button Randomize Map Event
 
     stopAnimation();
+    generateRandomMap();
+    randomizeSourceDest();
+
+    drawGrid(grid);
   })
 
 document
@@ -520,8 +592,13 @@ document
     stopAnimation();
 
     clearOverlay();
+    randomizeSourceDest();
+
+    drawGrid(grid);
   })
 
 // Kick off
 init();
+generateRandomMap();
+randomizeSourceDest();
 drawGrid(grid);
