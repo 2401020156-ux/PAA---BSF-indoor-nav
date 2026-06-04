@@ -293,5 +293,45 @@ function bfs(start, goal) {
   };
 }
 
+// ─── Event Handlers ─────────────────────────────────────────────────────────────
+document
+  .getElementById('btnStart')
+  .addEventListener('click', () => { // Button Start Event
+    
+    stopAnimation();
+    clearOverlay();
+
+    const result = bfs(sourcePos, destPos);
+
+    isRunning = true;
+    setButtonsState(true);
+
+    animate(result.explored, result.path);
+  })
+
+document
+  .getElementById('btnRestart')
+  .addEventListener('click', () => { // Button Restart Event
+    
+    fullReset();
+  })
+
+document
+  .getElementById('btnAcakMap')
+  .addEventListener('click', () => { // Button Randomize Map Event
+
+    stopAnimation();
+  })
+
+document
+  .getElementById('btnAcakSD')
+  .addEventListener('click', () => { // Button Randomize Source Destination Event
+    
+    stopAnimation();
+
+    clearOverlay();
+  })
+
 // Kick off
 init();
+drawGrid(grid);
