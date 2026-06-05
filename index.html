@@ -59,6 +59,26 @@
             <span class="legend-swatch" style="background:#2563EB;"></span>
             <span class="legend-label">User</span>
           </li>
+          <hr class="legend-divider">
+
+          <div class="stats-panel">
+            <h3 class="stats-title">BFS Statistics</h3>
+
+            <div class="stats-item">
+              <span>Explored Nodes</span>
+              <strong id="exploredCount">0</strong>
+            </div>
+
+            <div class="stats-item">
+              <span>Path Length</span>
+              <strong id="pathLength">0</strong>
+            </div>
+
+            <div class="stats-item">
+              <span>Efficiency</span>
+              <strong id="efficiency">0%</strong>
+            </div>
+          </div>
         </ul>
       </aside>
 
@@ -77,7 +97,7 @@
           </div>
           <div class="info-text">
             <span class="info-meta">Source</span>
-            <strong class="info-room" id="sourceLabel">-</strong>
+            <strong class="info-room" id="sourceLabel">Ruang A1</strong>
           </div>
         </div>
 
@@ -89,12 +109,13 @@
           </div>
           <div class="info-text">
             <span class="info-meta">Destination</span>
-            <strong class="info-room" id="destLabel">-</strong>
+            <strong class="info-room" id="destLabel">Ruang A3</strong>
           </div>
         </div>
       </div>
 
       <div class="ctrl-divider"></div>
+      
 
       <!-- Buttons -->
       <div class="btn-row">
